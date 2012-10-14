@@ -41,10 +41,13 @@ import poseur.events.files.ExportPoseHandler;
 import poseur.events.files.NewPoseHandler;
 import poseur.events.files.OpenPoseHandler;
 import poseur.events.files.SavePoseHandler;
+import poseur.events.shapes.EllipseSelectionHandler;
+import poseur.events.shapes.LineSelectionHandler;
 import poseur.events.shapes.RectangleSelectionHandler;
 import poseur.events.window.PoseurWindowHandler;
 import poseur.events.zoom.ChangePoseDimensionsHandler;
 import poseur.events.zoom.ZoomInHandler;
+import poseur.events.zoom.ZoomOutHandler;
 import poseur.files.ColorPalletLoader;
 import poseur.files.PoseurFileManager;
 import poseur.shapes.PoseurShape;
@@ -100,12 +103,15 @@ public class PoseurGUI extends JFrame
     // SHAPE SELECTION CONTROLS
     private JToolBar shapeToolbar;
     private JToggleButton rectToggleButton;
+    private JToggleButton ellipseToggleButton;
+    private JToggleButton lineToggleButton;
     private ButtonGroup shapeButtonGroup;
     private JComboBox lineStrokeSelectionComboBox;
     
     // ZOOM CONTROLS
     private JToolBar zoomToolbar;
     private JButton zoomInButton;
+    private JButton zoomOutButton;
     private JButton dimensionsButton;
     private JLabel zoomLabel;
         
@@ -520,6 +526,7 @@ public class PoseurGUI extends JFrame
         // NOW THE ZOOM TOOLBAR
         zoomToolbar = new JToolBar();
         zoomInButton = (JButton)initButton(ZOOM_IN_IMAGE_FILE, zoomToolbar, tracker, idCounter++, JButton.class, null, ZOOM_IN_TOOLTIP);
+        zoomOutButton = (JButton)initButton(ZOOM_OUT_IMAGE_FILE, zoomToolbar, tracker, idCounter++, JButton.class, null, ZOOM_OUT_TOOLTIP);
         zoomLabel = new JLabel();
         zoomLabel.setFont(ZOOM_LABEL_FONT);
         updateZoomLabel();
@@ -752,10 +759,16 @@ public class PoseurGUI extends JFrame
         // SHAPE SELECTION HANDLERS
         RectangleSelectionHandler rsh = new RectangleSelectionHandler();
         rectToggleButton.addActionListener(rsh);
+        EllipseSelectionHandler esh = new EllipseSelectionHandler();
+        ellipseToggleButton.addActionListener(esh);
+        LineSelectionHandler lsh = new LineSelectionHandler();
+        lineToggleButton.addActionListener(lsh);
                 
         // ZOOM HANDLERS
         ZoomInHandler zih = new ZoomInHandler();
+        ZoomOutHandler zoh = new ZoomOutHandler();
         zoomInButton.addActionListener(zih);
+        zoomOutButton.addActionListener(zoh);
         ChangePoseDimensionsHandler cpdh = new ChangePoseDimensionsHandler();
         dimensionsButton.addActionListener(cpdh);
         
@@ -833,6 +846,7 @@ public class PoseurGUI extends JFrame
     private void setEnabledZoomControls(boolean isEnabled)
     {
         zoomInButton.setEnabled(isEnabled);
+        zoomOutButton.setEnabled(isEnabled);
         zoomLabel.setEnabled(isEnabled);
         dimensionsButton.setEnabled(isEnabled);
     }

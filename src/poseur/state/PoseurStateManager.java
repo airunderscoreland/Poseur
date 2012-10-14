@@ -59,6 +59,7 @@ public class PoseurStateManager
     private int lastMouseDraggedX;
     private int lastMouseDraggedY;
     
+    
     /**
      * This constructor sets up all the state information regarding
      * the shapes that are to be rendered for the pose. Note that 
@@ -87,6 +88,7 @@ public class PoseurStateManager
         
         // THERE IS NO SELECTED SHAPE YET
         selectedShape = null;
+              
     }
  
     // ACCESSOR METHODS
@@ -306,7 +308,7 @@ public class PoseurStateManager
                 
             // REPAINT OF COURSE
             repaintCanvases();           
-        }     
+        } 
     }   
     
     /**
@@ -336,6 +338,7 @@ public class PoseurStateManager
             return;
         }
         
+        //SELECTING A SHAPE?
         if (state == PoseurState.SELECT_SHAPE_STATE || state == PoseurState.SHAPE_SELECTED_STATE) 
         {
             //let's go through all the shapes and see which one the user clicked
@@ -349,6 +352,14 @@ public class PoseurStateManager
                     selectedShape = sh;
                     setState(PoseurState.SHAPE_SELECTED_STATE);
                 } 
+            }
+        }
+        
+        if (state == PoseurState.SHAPE_SELECTED_STATE)
+        {
+            if (selectedShape.containsPoint(new Point(poseSpaceX, poseSpaceY)))
+            {
+                setState(PoseurState.DRAG_SHAPE_STATE);            
             }
         }
         
@@ -418,6 +429,10 @@ public class PoseurStateManager
                 // REPAINT OF COURSE
                 repaintCanvases();
             }
+        } 
+        else if (state == PoseurState.DRAG_SHAPE_STATE)
+        {
+            setState(PoseurState.SHAPE_SELECTED_STATE);
         }
     }
     

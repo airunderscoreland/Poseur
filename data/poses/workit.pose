@@ -17,7 +17,7 @@
                     <blue>204</blue>
                </fill_color>
                <alpha>255</alpha>
-               <geometry height="124.0" shape_type="RECTANGLE" width="129.0" x="52.0" y="71.0"/>
+               <geometry height="124.0" shape_type="RECTANGLE" width="129.0" x="68.0" y="94.0"/>
           </poseur_shape>
           <poseur_shape>
                <outline_thickness>5</outline_thickness>
@@ -47,7 +47,7 @@
                     <blue>51</blue>
                </fill_color>
                <alpha>255</alpha>
-               <geometry height="23.0" shape_type="RECTANGLE" width="24.0" x="84.0" y="20.0"/>
+               <geometry height="23.0" shape_type="RECTANGLE" width="24.0" x="22.0" y="95.0"/>
           </poseur_shape>
           <poseur_shape>
                <outline_thickness>5</outline_thickness>
@@ -62,7 +62,7 @@
                     <blue>51</blue>
                </fill_color>
                <alpha>255</alpha>
-               <geometry height="33.0" shape_type="RECTANGLE" width="38.0" x="8.0" y="24.0"/>
+               <geometry height="33.0" shape_type="RECTANGLE" width="38.0" x="19.0" y="29.0"/>
           </poseur_shape>
           <poseur_shape>
                <outline_thickness>5</outline_thickness>
