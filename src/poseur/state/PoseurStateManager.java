@@ -3,6 +3,7 @@ package poseur.state;
 import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.geom.Rectangle2D;
+import java.util.Iterator;
 import poseur.Poseur;
 import static poseur.PoseurSettings.*;
 import poseur.files.PoseurFileManager;
@@ -332,7 +333,27 @@ public class PoseurStateManager
         {
             return;
         }
+        
+        if (state == PoseurState.SELECT_SHAPE_STATE) 
+        {
+            //Did the user actually click a shape?
+            if ((selectedShape = pose.findShapeWithPoint(x, y))!=null)
+            {
+                state = PoseurState.SHAPE_SELECTED_STATE;
+            } else {
+                //Let's see if the user meant to select a line
+                Iterator<PoseurShape> it = pose.getShapesIterator();
+                PoseurShape shape = null;
+                if (it.hasNext()) {
+                    shape = it.next();
+                    if (shape.getShapeType().equals(PoseurShapeType.LINE)) 
+                    {
                         
+                    }
+                }
+            }
+        }
+        
         // IF WE ARE IN CREATE_SHAPE_MODE
         if (state == PoseurState.CREATE_SHAPE_STATE)
         {
