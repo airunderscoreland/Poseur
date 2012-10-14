@@ -10,6 +10,7 @@ import java.awt.geom.Point2D;
 import java.awt.geom.Line2D.Double;
 import java.awt.geom.Rectangle2D;
 import org.w3c.dom.Element;
+import poseur.PoseurSettings;
 
 /**
  *
@@ -74,7 +75,8 @@ public class PoseurLine extends PoseurShape {
     @Override
     public boolean containsPoint(Point2D testPoint)
     {
-        return geometry.contains(testPoint);
+        //was the point within the tolerance?
+        return geometry.ptLineDistSq(testPoint) < PoseurSettings.LINE_SELECTION_TOLERANCE;
     }
    
     /**
@@ -172,44 +174,60 @@ public class PoseurLine extends PoseurShape {
         // AND NOW CLAMP IT SO IT DOESN'T GO OFF THE EDGE
         
         // CLAMP ON LEFT SIDE
-        if (geometry.x < 0)
+        if (geometry.x1 < 0)
         {
-            geometry.x = 0;
+            geometry.x1 = 0;
+        }
+        if (geometry.x2 < 0) 
+        {
+            geometry.x2 = 0;
         }
         // CLAMP ON RIGHT
-        if ((geometry.x + geometry.width) > poseArea.width)
+        if (geometry.x1 > poseArea.width)
         {
-            geometry.x = poseArea.width - geometry.width -1;
+            geometry.x1 = poseArea.width;
+        }
+        if (geometry.x2 > poseArea.width)
+        {
+            geometry.x2 = poseArea.width;
         }
         // CLAMP ON TOP
-        if (geometry.y < 0)
+        if (geometry.y1 < 0)
         {
-            geometry.y = 0;
+            geometry.y1 = 0;
+        }
+        if (geometry.y2 < 0 )
+        {
+            geometry.y2 = 0;
         }
         // CLAMP ON BOTTOM
-        if ((geometry.y + geometry.height) > poseArea.height)
+        if (geometry.y1 > poseArea.height)
         {
-            geometry.y = poseArea.height - geometry.height - 1;
+            geometry.y1 = poseArea.height;
+        }
+        if (geometry.y2 > poseArea.height)
+        {
+            geometry.y2 = poseArea.height;
         }
     }
     
     /**
      * This method tests to see if the x,y arguments would be valid
-     * lower-right corner points for a rectangle in progress.
+     * second point  for a line in progress.
      * 
      * @param x The x-axis coordinate for the test point.
      * 
      * @param y The y-axis coordinate for the test point.
      * 
-     * @return true if (x,y) would be a valid lower-right corner
-     * point based on where this rectangle is currently located.
+     * @return true if (x,y) would be a valid (x2, y2)
+     * point based on where this line is currently located.
      */  
     @Override
     public boolean completesValidShape(int x, int y)
     {
         // WE ONLY LET SHAPES BE BUILT TOP LEFT TO BOTTOM RIGHT
-        if ( (x < geometry.x) ||
-             (y < geometry.y))
+        if ( (x < geometry.x2) ||
+             (y < geometry.y2))
         {
             return false;
         }
@@ -220,7 +238,7 @@ public class PoseurLine extends PoseurShape {
     }
     
     /**
-     * This method helps to update the a rectangle that's being
+     * This method helps to update the line that's being
      * sized, testing to make sure it doesn't draw in illegal 
      * coordinates.
      * 
@@ -231,23 +249,8 @@ public class PoseurLine extends PoseurShape {
     @Override
     public void updateShapeInProgress(int updateX, int updateY)
     {
-        if (updateX < geometry.x)
-        {
-            geometry.width = 0;
-        }
-        else
-        {
-            geometry.width = updateX - geometry.x;
-        }
-        
-        if (updateY < geometry.y)
-        {
-            geometry.height = 0;
-        }
-        else
-        {
-            geometry.height = updateY - geometry.y;
-        }    
+        geometry.x2 = updateX;
+        geometry.y2 = updateY;
     }
     
     /**
@@ -262,63 +265,13 @@ public class PoseurLine extends PoseurShape {
     @Override
     public void addNodeData(Element geometryNode)
     {
-        geometryNode.setAttribute(SHAPE_TYPE_ATTRIBUTE, getShapeType().name());
-        geometryNode.setAttribute(X_ATTRIBUTE, "" + geometry.x);
-        geometryNode.setAttribute(Y_ATTRIBUTE, "" + geometry.y);
-        geometryNode.setAttribute(WIDTH_ATTRIBUTE, "" + geometry.width);
-        geometryNode.setAttribute(HEIGHT_ATTRIBUTE, "" + geometry.height);
+        geometryNode.setAttribute(PoseurSettings.SHAPE_TYPE_ATTRIBUTE, getShapeType().name());
+        geometryNode.setAttribute(PoseurSettings.X1_ATTRIBUTE, "" + geometry.x1);
+        geometryNode.setAttribute(PoseurSettings.Y1_ATTRIBUTE, "" + geometry.y1);
+        geometryNode.setAttribute(PoseurSettings.X2_ATTRIBUTE, "" + geometry.x2);
+        geometryNode.setAttribute(PoseurSettings.Y2_ATTRIBUTE, "" + geometry.y2);
+        
     }
     
-    
-    
-    /*@Override
-    public PoseurShapeType getShapeType() {
-        return PoseurShapeType.LINE;
-    }
-
-    @Override
-    public boolean containsPoint(Point2D testPoint) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void render(Graphics2D g2, int poseOriginX, int poseOriginY, float zoomLevel, boolean isSelected) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public PoseurShape clone() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void move(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void moveShape(int incX, int incY, Double poseArea) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public boolean completesValidShape(int x, int y) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void updateShapeInProgress(int updateX, int updateY) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void addNodeData(Element geometryNode) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
-    @Override
-    public void moveShape(int incX, int incY, Rectangle2D.Double poseArea) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    } */
     
 }

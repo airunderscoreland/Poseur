@@ -1,7 +1,8 @@
 package poseur.state;
 
-import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Point;
+import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
 import poseur.Poseur;
@@ -9,6 +10,7 @@ import static poseur.PoseurSettings.*;
 import poseur.files.PoseurFileManager;
 import poseur.gui.PoseCanvas;
 import poseur.gui.PoseurGUI;
+import poseur.shapes.PoseurLine;
 import poseur.shapes.PoseurRectangle;
 import poseur.shapes.PoseurShape;
 import poseur.shapes.PoseurShapeType;
@@ -334,23 +336,19 @@ public class PoseurStateManager
             return;
         }
         
-        if (state == PoseurState.SELECT_SHAPE_STATE) 
+        if (state == PoseurState.SELECT_SHAPE_STATE || state == PoseurState.SHAPE_SELECTED_STATE) 
         {
-            //Did the user actually click a shape?
-            if ((selectedShape = pose.findShapeWithPoint(x, y))!=null)
+            //let's go through all the shapes and see which one the user clicked
+            Iterator<PoseurShape> it = pose.getShapesIterator();
+            PoseurShape sh;
+            while (it.hasNext())
             {
-                state = PoseurState.SHAPE_SELECTED_STATE;
-            } else {
-                //Let's see if the user meant to select a line
-                Iterator<PoseurShape> it = pose.getShapesIterator();
-                PoseurShape shape = null;
-                if (it.hasNext()) {
-                    shape = it.next();
-                    if (shape.getShapeType().equals(PoseurShapeType.LINE)) 
-                    {
-                        
-                    }
-                }
+                sh = it.next();
+                if (sh.containsPoint(new Point(poseSpaceX,poseSpaceY)))
+                {
+                    selectedShape = sh;
+                    setState(PoseurState.SHAPE_SELECTED_STATE);
+                } 
             }
         }
         

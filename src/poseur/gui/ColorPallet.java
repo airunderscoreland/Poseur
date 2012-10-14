@@ -144,10 +144,13 @@ public class ColorPallet extends JPanel
         // DISABLED/ENABLED RENDERING LOOK
         super.setEnabled(isEnabled);
         
+        
         // AND THEN CASCADE IT THROUGH ALL THE BUTTONS
         for (int i = 0; i < colorPalletButtons.length; i++)
         {
             colorPalletButtons[i].setEnabled(isEnabled);
+            colorPalletButtons[i].setOpaque(true);
+            colorPalletButtons[i].setBorderPainted(false);
         }
     }
 }

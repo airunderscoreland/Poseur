@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<poseur_pose>
+     <pose_width>256</pose_width>
+     <pose_height>256</pose_height>
+     <num_shapes>6</num_shapes>
+     <shapes_list>
+          <poseur_shape>
+               <outline_thickness>5</outline_thickness>
+               <outline_color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+               </outline_color>
+               <fill_color>
+                    <red>153</red>
+                    <green>0</green>
+                    <blue>204</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="124.0" shape_type="RECTANGLE" width="129.0" x="52.0" y="71.0"/>
+          </poseur_shape>
+          <poseur_shape>
+               <outline_thickness>5</outline_thickness>
+               <outline_color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+               </outline_color>
+               <fill_color>
+                    <red>153</red>
+                    <green>0</green>
+                    <blue>204</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="45.0" shape_type="RECTANGLE" width="34.0" x="205.0" y="17.0"/>
+          </poseur_shape>
+          <poseur_shape>
+               <outline_thickness>5</outline_thickness>
+               <outline_color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+               </outline_color>
+               <fill_color>
+                    <red>255</red>
+                    <green>51</green>
+                    <blue>51</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="23.0" shape_type="RECTANGLE" width="24.0" x="84.0" y="20.0"/>
+          </poseur_shape>
+          <poseur_shape>
+               <outline_thickness>5</outline_thickness>
+               <outline_color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+               </outline_color>
+               <fill_color>
+                    <red>255</red>
+                    <green>51</green>
+                    <blue>51</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="33.0" shape_type="RECTANGLE" width="38.0" x="8.0" y="24.0"/>
+          </poseur_shape>
+          <poseur_shape>
+               <outline_thickness>5</outline_thickness>
+               <outline_color>
+                    <red>0</red>
+                    <green>0</green>
+                    <blue>0</blue>
+               </outline_color>
+               <fill_color>
+                    <red>255</red>
+                    <green>51</green>
+                    <blue>51</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="10.0" shape_type="RECTANGLE" width="45.0" x="9.0" y="3.0"/>
+          </poseur_shape>
+          <poseur_shape>
+               <outline_thickness>6</outline_thickness>
+               <outline_color>
+                    <red>51</red>
+                    <green>255</green>
+                    <blue>255</blue>
+               </outline_color>
+               <fill_color>
+                    <red>51</red>
+                    <green>255</green>
+                    <blue>255</blue>
+               </fill_color>
+               <alpha>255</alpha>
+               <geometry height="32.0" shape_type="RECTANGLE" width="12.0" x="229.0" y="204.0"/>
+          </poseur_shape>
+     </shapes_list>
+</poseur_pose>
