@@ -119,7 +119,7 @@ public class PoseurFileManager
             Poseur.getPoseur().getGUI().updateMode();
         }
     }
-    
+   
     /**
      * This method will save the current pose as a named file provided
      * by the user.

@@ -40,6 +40,7 @@ import poseur.events.files.ExitHandler;
 import poseur.events.files.ExportPoseHandler;
 import poseur.events.files.NewPoseHandler;
 import poseur.events.files.OpenPoseHandler;
+import poseur.events.files.SavePoseAsHandler;
 import poseur.events.files.SavePoseHandler;
 import poseur.events.shapes.EllipseSelectionHandler;
 import poseur.events.shapes.LineSelectionHandler;
@@ -91,6 +92,7 @@ public class PoseurGUI extends JFrame
     private JButton newButton;
     private JButton openButton;
     private JButton saveButton;
+    private JButton saveAsButton;
     private JButton exportButton;
     private JButton exitButton;
     
@@ -496,6 +498,7 @@ public class PoseurGUI extends JFrame
         newButton    = (JButton)initButton(NEW_IMAGE_FILE,      fileToolbar,  tracker, idCounter++, JButton.class, null, NEW_TOOLTIP);
         openButton   = (JButton)initButton(OPEN_IMAGE_FILE,     fileToolbar,  tracker, idCounter++, JButton.class, null, OPEN_TOOLTIP);
         saveButton   = (JButton)initButton(SAVE_IMAGE_FILE,     fileToolbar,  tracker, idCounter++, JButton.class, null, SAVE_TOOLTIP);
+        saveAsButton = (JButton)initButton(SAVE_AS_IMAGE_FILE,  fileToolbar,  tracker, idCounter++, JButton.class, null, SAVE_AS_TOOLTIP);
         exportButton = (JButton)initButton(EXPORT_IMAGE_FILE,   fileToolbar,  tracker, idCounter++, JButton.class, null, EXPORT_TOOLTIP);
         exitButton   = (JButton)initButton(EXIT_IMAGE_FILE,     fileToolbar,  tracker, idCounter++, JButton.class, null, EXIT_TOOLTIP);
         
@@ -745,6 +748,8 @@ public class PoseurGUI extends JFrame
         openButton.addActionListener(oph);
         SavePoseHandler sph = new SavePoseHandler();
         saveButton.addActionListener(sph);
+        SavePoseAsHandler spah = new SavePoseAsHandler();
+        saveAsButton.addActionListener(spah);
         ExportPoseHandler eph = new ExportPoseHandler();
         exportButton.addActionListener(eph);
         ExitHandler eh = new ExitHandler();

@@ -62,6 +62,7 @@ public class PoseurSettings
     public static final String NEW_IMAGE_FILE = BUTTON_IMAGES_PATH + "New.png";
     public static final String OPEN_IMAGE_FILE = BUTTON_IMAGES_PATH + "Open.png";
     public static final String SAVE_IMAGE_FILE = BUTTON_IMAGES_PATH + "Save.png";
+    public static final String SAVE_AS_IMAGE_FILE = BUTTON_IMAGES_PATH + "SaveAs.png";
     public static final String EXPORT_IMAGE_FILE = BUTTON_IMAGES_PATH + "Export.png";
     public static final String EXIT_IMAGE_FILE = BUTTON_IMAGES_PATH + "Exit.png";
 
@@ -93,6 +94,7 @@ public class PoseurSettings
     public static final String NEW_TOOLTIP = "New Pose";
     public static final String OPEN_TOOLTIP = "Open Pose";
     public static final String SAVE_TOOLTIP = "Save Pose";
+    public static final String SAVE_AS_TOOLTIP = "Save Pose As...";
     public static final String EXPORT_TOOLTIP = "Export Pose to Image";
     public static final String EXIT_TOOLTIP = "Exit Application";
 
