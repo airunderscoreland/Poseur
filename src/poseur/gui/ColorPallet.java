@@ -2,11 +2,19 @@ package poseur.gui;
 
 import java.awt.Color;
 import java.awt.GridLayout;
+import java.util.ArrayList;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
+import org.w3c.dom.Document;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import poseur.PoseurSettings;
 import poseur.events.colors.ColorPalletHandler;
+import poseur.files.InvalidXMLFileFormatException;
+import poseur.files.XMLUtilities;
 import poseur.state.ColorPalletState;
 
 /**
@@ -49,9 +57,58 @@ public class ColorPallet extends JPanel
         // IT EVERY TIME WE REFRESH
         state = initColorPalletState;
         
-        // FIRST LET'S CONSTRUCT ALL THE BUTTONS
-        int numColorsInPallet = state.getColorPalletSize();
+        XMLUtilities xmlloader = new XMLUtilities();
+        Document palletSettings = null;
+        try {
+            palletSettings = xmlloader.loadXMLDocument(PoseurSettings.COLOR_PALLET_SETTINGS_XML, PoseurSettings.COLOR_PALLET_SETTINGS_SCHEMA);
+        } catch(InvalidXMLFileFormatException ixffe)
+        {
+            JOptionPane.showMessageDialog(this, ixffe.toString());
+            System.exit(0);
+        }
+        
+        Node root = palletSettings.getFirstChild();
+        NodeList children = root.getChildNodes();
+        int numColorsInPallet = xmlloader.getIntData(palletSettings, PoseurSettings.PALLET_SIZE_NODE);
+        int numRows = xmlloader.getIntData(palletSettings, PoseurSettings.PALLET_ROWS_NODE);
+        int numFixedColors;
+        int red, green, blue;
+        Color[] palletColors = new Color[numColorsInPallet];
+        Node currentNode = root;
+        int x=0;
+        while (true)
+        {
+            if ((currentNode = xmlloader.getNodeInSequence(palletSettings, PoseurSettings.PALLET_COLOR_NODE, x))==null)
+            {
+                break;
+            }
+            Node colorNode = currentNode.getFirstChild();
+            red = Integer.parseInt(colorNode.getTextContent());
+            colorNode = colorNode.getNextSibling();
+            green = Integer.parseInt(colorNode.getTextContent());
+            colorNode = colorNode.getNextSibling();
+            blue = Integer.parseInt(colorNode.getTextContent());
+            palletColors[x]=new Color (red,green,blue);
+            x++;
+        }
+        
+        numFixedColors = x;
+        Color defaultColor = PoseurSettings.UNASSIGNED_COLOR_PALLET_COLOR;
+        Node defaultColorNode; 
+        if ((defaultColorNode = xmlloader.getChildNodeWithName(palletSettings, PoseurSettings.DEFAULT_COLOR_NODE))!=null)
+        {
+            red = Integer.parseInt(defaultColorNode.getChildNodes().item(0).getTextContent());
+            green = Integer.parseInt(defaultColorNode.getChildNodes().item(1).getTextContent());
+            blue = Integer.parseInt(defaultColorNode.getChildNodes().item(2).getTextContent());
+            defaultColor = new Color(red, green, blue);
+        } 
+        
+        state.loadColorPalletState(palletColors, numRows, numFixedColors, defaultColor);
+        
+        
         colorPalletButtons = new JButton[numColorsInPallet];
+        
+        
         for (int i = 0; i < numColorsInPallet; i++)
         {
             // CONSTRUCT AND ADD EACH BUTTON ONE AT A TIME
