@@ -31,6 +31,8 @@ import poseur.Poseur;
 import static poseur.PoseurSettings.*;
 import poseur.gui.PoseCanvas;
 import poseur.gui.PoseurGUI;
+import poseur.shapes.PoseurEllipse;
+import poseur.shapes.PoseurLine;
 import poseur.shapes.PoseurRectangle;
 import poseur.shapes.PoseurShape;
 import poseur.shapes.PoseurShapeType;
@@ -91,14 +93,33 @@ public class PoseIO
                 String shapeTypeText = attributes.getNamedItem(SHAPE_TYPE_ATTRIBUTE).getTextContent();
                 PoseurShapeType shapeType = PoseurShapeType.valueOf(shapeTypeText);
                 
-                // WE ONLY HAVE RECTANGLES AT THE MOMENT
-                double x = Double.parseDouble(attributes.getNamedItem(X_ATTRIBUTE).getTextContent());
-                double y = Double.parseDouble(attributes.getNamedItem(Y_ATTRIBUTE).getTextContent());
-                double width = Double.parseDouble(attributes.getNamedItem(WIDTH_ATTRIBUTE).getTextContent());
-                double height = Double.parseDouble(attributes.getNamedItem(HEIGHT_ATTRIBUTE).getTextContent());
-                Rectangle2D.Double geometry = new Rectangle2D.Double(x, y, width, height);
-                shapeToAdd = new PoseurRectangle(geometry);
-                
+                if (shapeTypeText.equals(PoseurShapeType.RECTANGLE.name()))
+                {
+                    double x = Double.parseDouble(attributes.getNamedItem(X_ATTRIBUTE).getTextContent());
+                    double y = Double.parseDouble(attributes.getNamedItem(Y_ATTRIBUTE).getTextContent());
+                    double width = Double.parseDouble(attributes.getNamedItem(WIDTH_ATTRIBUTE).getTextContent());
+                    double height = Double.parseDouble(attributes.getNamedItem(HEIGHT_ATTRIBUTE).getTextContent());
+                    Rectangle2D.Double geometry = new Rectangle2D.Double(x, y, width, height);
+                    shapeToAdd = new PoseurRectangle(geometry);
+                } 
+                else if (shapeTypeText.equals(PoseurShapeType.LINE.name()))
+                {
+                    double x1 = Double.parseDouble(attributes.getNamedItem(X1_ATTRIBUTE).getTextContent());
+                    double y1 = Double.parseDouble(attributes.getNamedItem(Y1_ATTRIBUTE).getTextContent());
+                    double x2 = Double.parseDouble(attributes.getNamedItem(X2_ATTRIBUTE).getTextContent());
+                    double y2 = Double.parseDouble(attributes.getNamedItem(Y2_ATTRIBUTE).getTextContent());
+                    Line2D.Double geometry = new Line2D.Double(x1, y1, x2, y2);
+                    shapeToAdd = new PoseurLine(geometry); 
+                } 
+                else //we will never assum it won't be an ellipse 
+                {
+                    double x = Double.parseDouble(attributes.getNamedItem(X_ATTRIBUTE).getTextContent());
+                    double y = Double.parseDouble(attributes.getNamedItem(Y_ATTRIBUTE).getTextContent());
+                    double width = Double.parseDouble(attributes.getNamedItem(WIDTH_ATTRIBUTE).getTextContent());
+                    double height = Double.parseDouble(attributes.getNamedItem(HEIGHT_ATTRIBUTE).getTextContent());
+                    Ellipse2D.Double geometry = new Ellipse2D.Double(x, y, width, height);
+                    shapeToAdd = new PoseurEllipse(geometry);
+                }
                 // FIRST GET THE OUTLINE THICKNESS
                 Node outlineNode = xmlUtil.getChildNodeWithName(node, OUTLINE_THICKNESS_NODE);
                 int outlineThickness = Integer.parseInt(outlineNode.getTextContent());

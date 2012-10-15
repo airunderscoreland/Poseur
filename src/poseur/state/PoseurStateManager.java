@@ -10,6 +10,7 @@ import static poseur.PoseurSettings.*;
 import poseur.files.PoseurFileManager;
 import poseur.gui.PoseCanvas;
 import poseur.gui.PoseurGUI;
+import poseur.shapes.PoseurEllipse;
 import poseur.shapes.PoseurLine;
 import poseur.shapes.PoseurRectangle;
 import poseur.shapes.PoseurShape;
@@ -370,6 +371,14 @@ public class PoseurStateManager
             if (shapeInProgressType == PoseurShapeType.RECTANGLE)
             {
                 shapeInProgress = PoseurRectangle.factoryBuildRectangle(poseSpaceX, poseSpaceY);
+            }
+            if (shapeInProgressType == PoseurShapeType.ELLIPSE)
+            {
+                shapeInProgress = PoseurEllipse.factoryBuildEllipse(poseSpaceX, poseSpaceY);
+            }
+            if (shapeInProgressType == PoseurShapeType.LINE)
+            {
+                shapeInProgress = PoseurLine.factoryBuildLine(poseSpaceX, poseSpaceY);
             }
 
             // WE NEED TO SWITCH MODES

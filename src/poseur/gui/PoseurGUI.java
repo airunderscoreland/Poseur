@@ -509,7 +509,9 @@ public class PoseurGUI extends JFrame
         shapeToolbar = new JToolBar();
         shapeButtonGroup = new ButtonGroup();
         rectToggleButton   = (JToggleButton)initButton( RECT_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, RECT_TOOLTIP);
-
+        ellipseToggleButton   = (JToggleButton)initButton( ELLIPSE_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, ELLIPSE_TOOLTIP);
+        lineToggleButton   = (JToggleButton)initButton( LINE_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, LINE_TOOLTIP);
+        
         // THE LINE THICKNESS SELECTION COMBO BOX WILL GO WITH THE SHAPE CONTROLS
         DefaultComboBoxModel lineThicknessModel = new DefaultComboBoxModel();
         for (int i = 0; i < NUM_STROKES_TO_CHOOSE_FROM; i++)
@@ -855,6 +857,8 @@ public class PoseurGUI extends JFrame
     {
         // INIT THEM AS USABLE OR NOT
         rectToggleButton.setEnabled(isEnabled);
+        ellipseToggleButton.setEnabled(isEnabled);
+        lineToggleButton.setEnabled(isEnabled);
         lineStrokeSelectionComboBox.setEnabled(isEnabled);
         
         // IF THEY'RE USABLE, MAKE THE TOGGLES UNSELECTED

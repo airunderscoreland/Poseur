@@ -76,7 +76,7 @@ public class PoseurLine extends PoseurShape {
     public boolean containsPoint(Point2D testPoint)
     {
         //was the point within the tolerance?
-        return geometry.ptLineDistSq(testPoint) < PoseurSettings.LINE_SELECTION_TOLERANCE;
+        return geometry.ptLineDistSq(testPoint) < PoseurSettings.LINE_SELECTION_TOLERANCE*PoseurSettings.LINE_SELECTION_TOLERANCE;
     }
    
     /**
@@ -177,37 +177,61 @@ public class PoseurLine extends PoseurShape {
         if (geometry.x1 < 0)
         {
             geometry.x1 = 0;
+            geometry.x2 -= incX; //undo change
+            geometry.y2 -= incY;
+            geometry.y1 -= incY;
         }
         if (geometry.x2 < 0) 
         {
             geometry.x2 = 0;
+            geometry.y1 -= incY;
+            geometry.x1 -= incX;
+            geometry.y2 -= incY;
         }
         // CLAMP ON RIGHT
         if (geometry.x1 > poseArea.width)
         {
             geometry.x1 = poseArea.width;
+            geometry.x2 -= incX; //undo change
+            geometry.y2 -= incY;
+            geometry.y1 -= incY;
         }
         if (geometry.x2 > poseArea.width)
         {
             geometry.x2 = poseArea.width;
+            geometry.y1 -= incY;
+            geometry.x1 -= incX;
+            geometry.y2 -= incY;
         }
         // CLAMP ON TOP
         if (geometry.y1 < 0)
         {
             geometry.y1 = 0;
+            geometry.y2 -= incY;
+            geometry.x1 -= incX;
+            geometry.x2 -= incX;
         }
         if (geometry.y2 < 0 )
         {
             geometry.y2 = 0;
+            geometry.y1 -= incY;
+            geometry.x1 -= incX;
+            geometry.x2 -= incX;
         }
         // CLAMP ON BOTTOM
         if (geometry.y1 > poseArea.height)
         {
             geometry.y1 = poseArea.height;
+            geometry.y2 -= incY;
+            geometry.x1 -= incX;
+            geometry.x2 -= incX;
         }
         if (geometry.y2 > poseArea.height)
         {
             geometry.y2 = poseArea.height;
+            geometry.y1 -= incY;
+            geometry.x1 -= incX;
+            geometry.x2 -= incX;
         }
     }
     
@@ -270,7 +294,6 @@ public class PoseurLine extends PoseurShape {
         geometryNode.setAttribute(PoseurSettings.Y1_ATTRIBUTE, "" + geometry.y1);
         geometryNode.setAttribute(PoseurSettings.X2_ATTRIBUTE, "" + geometry.x2);
         geometryNode.setAttribute(PoseurSettings.Y2_ATTRIBUTE, "" + geometry.y2);
-        
     }
     
     
