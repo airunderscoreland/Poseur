@@ -115,6 +115,17 @@ public class PoseurPose
     }  
 
     /**
+     * Works like addShape(), but adds it to the back of the shapes list which
+     * means it should render behind all other shapes.
+     * 
+     * @param shapetoAdd The shape to add to the beginning of the shapes list.
+     */
+    public void addShapeToBack(PoseurShape shapetoAdd)
+    {
+        shapesList.add(0, shapetoAdd);
+    }
+    
+    /**
      * This method removes a shape from the list of shapes to
      * be rendered as part of this pose.
      * 

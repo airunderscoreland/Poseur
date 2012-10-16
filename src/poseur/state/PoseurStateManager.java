@@ -5,6 +5,7 @@ import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
+import java.util.LinkedList;
 import poseur.Poseur;
 import static poseur.PoseurSettings.*;
 import poseur.files.PoseurFileManager;
@@ -475,6 +476,10 @@ public class PoseurStateManager
         repaintCanvases();
     } 
     
+    /**
+     * This method puts the selected item on the clipboard and removes it
+     * from the rendering surface.
+     */
     public void cutSelectedItem()
     {
         copySelectedItem();
@@ -484,6 +489,36 @@ public class PoseurStateManager
         repaintCanvases();
     }
     
+    /**
+     * This method moves the selected item to the front of the rendering surface
+     * on top of the other shapes.
+     */
+    public void bringSelectedItemUp()
+    {
+        PoseurShape tempSelectedShape = selectedShape;
+        pose.removeShape(selectedShape);
+        pose.addShape(tempSelectedShape);
+        selectedShape = tempSelectedShape;
+        
+        // REPAINT THE CANVASES
+        repaintCanvases();
+    }
+    
+    /**
+     * This method moves the selected item to the back of the rendering surface
+     * under the other shapes.
+     */
+    public void bringSelectedItemDown()
+    {
+        PoseurShape tempSelectedShape = selectedShape;
+        pose.removeShape(selectedShape);
+        pose.addShapeToBack(tempSelectedShape);
+        selectedShape = tempSelectedShape;
+        
+        // REPAINT THE CANVASES
+        repaintCanvases();
+    }
+            
     /**
      * This method will assign the selected color to the selected
      * shape, if there is one, based on which toggle button is
