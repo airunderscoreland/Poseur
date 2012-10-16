@@ -470,10 +470,19 @@ public class PoseurStateManager
         PoseurShape shapeToPaste = clipboard.clone();
         shapeToPaste.move(0, 0);
         pose.addShape(shapeToPaste);
-
+        
         // REPAINT THE CANVASES
         repaintCanvases();
     } 
+    
+    public void cutSelectedItem()
+    {
+        copySelectedItem();
+        pose.removeShape(selectedShape);
+        
+        // REPAINT THE CANVASES
+        repaintCanvases();
+    }
     
     /**
      * This method will assign the selected color to the selected

@@ -34,6 +34,7 @@ import poseur.events.colors.CustomColorHandler;
 import poseur.events.colors.FillColorHandler;
 import poseur.events.colors.OutlineColorHandler;
 import poseur.events.edit.CopyHandler;
+import poseur.events.edit.CutHandler;
 import poseur.events.edit.PasteHandler;
 import poseur.events.edit.StartSelectionHandler;
 import poseur.events.files.ExitHandler;
@@ -99,6 +100,7 @@ public class PoseurGUI extends JFrame
     // EDIT CONTROLS
     private JToolBar editToolbar;
     private JButton selectionButton;
+    private JButton cutButton;
     private JButton copyButton;
     private JButton pasteButton;
     
@@ -505,6 +507,7 @@ public class PoseurGUI extends JFrame
         // EDITING CONTROLS
         editToolbar = new JToolBar();
         selectionButton = (JButton)initButton(SELECTION_IMAGE_FILE, editToolbar, tracker, idCounter++, JButton.class, null, SELECT_TOOLTIP);
+        cutButton  = (JButton)initButton(CUT_IMAGE_FILE,   editToolbar, tracker, idCounter++, JButton.class, null, CUT_TOOLTIP);
         copyButton  = (JButton)initButton(COPY_IMAGE_FILE,   editToolbar, tracker, idCounter++, JButton.class, null, COPY_TOOLTIP);
         pasteButton = (JButton)initButton(PASTE_IMAGE_FILE,  editToolbar, tracker, idCounter++, JButton.class, null, PASTE_TOOLTIP);
         
@@ -758,6 +761,8 @@ public class PoseurGUI extends JFrame
         // EDIT TOOLBAR HANDLER
         StartSelectionHandler startSH = new StartSelectionHandler();
         selectionButton.addActionListener(startSH);
+        CutHandler cuth = new CutHandler();
+        cutButton.addActionListener(cuth);
         CopyHandler copyEh = new CopyHandler();
         copyButton.addActionListener(copyEh);
         PasteHandler pasteEh = new PasteHandler();
@@ -831,7 +836,9 @@ public class PoseurGUI extends JFrame
 
         // THESE ARE EASY, JUST DO AS THEY'RE TOLD
         copyButton.setEnabled(isEnabled);
-                
+        
+        cutButton.setEnabled(isEnabled);
+        
         // WE ONLY WANT PASTE ENABLED IF THERE IS
         // SOMETHING ON THE CLIPBOARD
         Poseur singleton = Poseur.getPoseur();

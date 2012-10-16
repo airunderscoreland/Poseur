@@ -117,11 +117,12 @@ public class PoseurLine extends PoseurShape {
     @Override
     public PoseurShape clone()
     {
-        Rectangle2D.Double copyGeometry = (Rectangle2D.Double)geometry.clone();
+        Line2D.Double copyGeometry = (Line2D.Double)geometry.clone();
         
         // SINCE Color AND Stroke ARE IMMUTABLE,
         // WE DON'T MIND SHARING THEM 
-        PoseurShape copy = new PoseurRectangle( copyGeometry);
+        PoseurShape copy = new PoseurLine( copyGeometry);
+        //copy.alpha = this.alpha; //do we need this?
         copy.fillColor = this.fillColor;
         copy.outlineColor = this.outlineColor;
         copy.outlineThickness = this.outlineThickness;
