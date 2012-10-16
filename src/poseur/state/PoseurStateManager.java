@@ -1,11 +1,11 @@
 package poseur.state;
 
+import java.awt.BasicStroke;
 import java.awt.Color;
 import java.awt.Point;
 import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.util.Iterator;
-import java.util.LinkedList;
 import poseur.Poseur;
 import static poseur.PoseurSettings.*;
 import poseur.files.PoseurFileManager;
@@ -238,6 +238,69 @@ public class PoseurStateManager
         // THIS WILL UNDO ANY SHAPE IN PROGRESS ALREADY
         shapeInProgress = null;    
         shapeInProgressType = shapeType;
+        
+        // REPAINT THE CANVASES
+        repaintCanvases();
+    }
+    
+    /**
+     * Sets the fill color of the selected shape to the background color of
+     * the fill color toggle button.
+     */
+    public void setSelectedShapeFillColor()
+    {
+        if (state == PoseurState.SHAPE_SELECTED_STATE)
+        {
+            Poseur singleton = Poseur.getPoseur();
+            selectedShape.setFillColor(singleton.getGUI().getFillColor());
+            // REPAINT THE CANVASES
+            repaintCanvases();
+        }
+    }
+    
+    /**
+     * Sets the outline color of the selected shape to the background color of 
+     * the outline color toggle button.
+     */
+    public void setSelectedShapeOutlineColor()
+    {
+        if (state == PoseurState.SHAPE_SELECTED_STATE)
+        {
+            Poseur singleton = Poseur.getPoseur();
+            selectedShape.setOutlineColor(singleton.getGUI().getFillColor());
+            // REPAINT THE CANVASES
+            repaintCanvases();
+        }
+    }
+    
+    /**
+     * Sets the outline thickness of the selected shape to the one selected
+     * in the combobox.
+     */
+    public void setSelectedShapeOutlineThickness()
+    {
+        if (state == PoseurState.SHAPE_SELECTED_STATE)
+        {
+            Poseur singleton = Poseur.getPoseur();
+            BasicStroke line = selectedShape.getOutlineThickness();
+            PoseurGUI pGUI = singleton.getGUI();
+            int thickness = pGUI.getLineThickness();
+            BasicStroke newLine;
+            newLine = new BasicStroke(thickness);
+            selectedShape.setOutlineThickness(newLine);
+            // REPAINT THE CANVASES
+            repaintCanvases();
+        }
+    }
+    
+    /**
+     * Set the alpha (transparency) of the selected shape to the value of the
+     * transparency slider
+     */
+    public void updateSelectedShapeAlpha()
+    {
+        Poseur singleton = Poseur.getPoseur();
+        selectedShape.setAlpha(singleton.getGUI().getAlphaTransparency());
         
         // REPAINT THE CANVASES
         repaintCanvases();

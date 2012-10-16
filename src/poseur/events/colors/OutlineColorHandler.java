@@ -33,5 +33,6 @@ public class OutlineColorHandler implements ActionListener
         
         // TOGGLE THE OUTLINE BUTTON, WHICH WILL UPDATE THE VIEW
         gui.toggleOutlineColorButton();
+        singleton.getStateManager().setSelectedShapeOutlineColor();
     }
 }

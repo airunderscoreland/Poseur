@@ -29,6 +29,7 @@ import poseur.Poseur;
 import static poseur.PoseurSettings.*;
 import poseur.events.canvas.PoseCanvasComponentHandler;
 import poseur.events.canvas.PoseCanvasMouseHandler;
+import poseur.events.colors.AlphaSliderHandler;
 import poseur.events.colors.ColorPalletHandler;
 import poseur.events.colors.CustomColorHandler;
 import poseur.events.colors.FillColorHandler;
@@ -47,6 +48,7 @@ import poseur.events.files.SavePoseAsHandler;
 import poseur.events.files.SavePoseHandler;
 import poseur.events.shapes.EllipseSelectionHandler;
 import poseur.events.shapes.LineSelectionHandler;
+import poseur.events.shapes.OutlineThicknessSelectionHandler;
 import poseur.events.shapes.RectangleSelectionHandler;
 import poseur.events.window.PoseurWindowHandler;
 import poseur.events.zoom.ChangePoseDimensionsHandler;
@@ -553,7 +555,10 @@ public class PoseurGUI extends JFrame
         outlineColorSelectionButton.setBackground(Color.BLACK);
         fillColorSelectionButton = (ColorToggleButton)initButton(FILL_COLOR_IMAGE_FILE, colorSelectionToolbar, tracker, idCounter++, ColorToggleButton.class, colorButtonGroup, FILL_TOOLTIP);
         fillColorSelectionButton.setBackground(Color.WHITE);
+        fillColorSelectionButton.setOpaque(true); //Mac Fix
+        outlineColorSelectionButton.setOpaque(true); //Mac Fix
         outlineColorSelectionButton.setSelected(true);
+        
         
         // AND LET'S LOAD THE COLOR PALLET FROM AN XML FILE
         ColorPalletLoader cpl = new ColorPalletLoader();
@@ -582,6 +587,9 @@ public class PoseurGUI extends JFrame
         transparencySlider.setPaintTrack(true);
         transparencySlider.setToolTipText(ALPHA_TOOLTIP);
         transparencySlider.setSnapToTicks(false);
+        
+        AlphaSliderHandler cl = new AlphaSliderHandler();
+        transparencySlider.addChangeListener(cl);
         
         // NOW WE NEED TO WAIT FOR ALL THE IMAGES THE
         // MEDIA TRACKER HAS BEEN GIVEN TO FULLY LOAD
@@ -785,6 +793,8 @@ public class PoseurGUI extends JFrame
         ellipseToggleButton.addActionListener(esh);
         LineSelectionHandler lsh = new LineSelectionHandler();
         lineToggleButton.addActionListener(lsh);
+        OutlineThicknessSelectionHandler otsh = new OutlineThicknessSelectionHandler();
+        lineStrokeSelectionComboBox.addItemListener(otsh);
                 
         // ZOOM HANDLERS
         ZoomInHandler zih = new ZoomInHandler();

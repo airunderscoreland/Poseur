@@ -33,5 +33,7 @@ public class FillColorHandler implements ActionListener
         
         // TOGGLE THE FILL BUTTON, WHICH WILL UPDATE THE VIEW
         gui.toggleFillColorButton();
+        singleton.getStateManager().setSelectedShapeFillColor(); 
+        
     }
 }
