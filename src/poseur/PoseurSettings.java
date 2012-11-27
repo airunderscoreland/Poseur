@@ -58,6 +58,23 @@ public class PoseurSettings
     // THIS LISTS ALL THE IMAGES WE'LL USE ON OUR BUTTONS. THEY
     // ARE GROUPED BY TOOLBAR
     
+    // BUTTON IMAGES FOR PLAYING ANIMATIONS
+    public static final String PLAY_ANIMATION_FILE = BUTTON_IMAGES_PATH + "StartAnimationButton.png";
+    public static final String STOP_ANIMATION_FILE = BUTTON_IMAGES_PATH + "StopAnimationButton.png";
+    public static final String SPEEDUP_ANIMATION_FILE = BUTTON_IMAGES_PATH + "SpeedUpAnimationButton.png";
+    public static final String SLOWDOWN_ANIMATION_FILE = BUTTON_IMAGES_PATH + "SlowDownAnimationButton.png";
+    
+    // BUTTON IMAGES FOR VIEW SELECTION
+    public static final String PLAY_VIEW_FILE = BUTTON_IMAGES_PATH + "PlayAnimation.png";
+    public static final String SEQUENCE_VIEW_FILE = BUTTON_IMAGES_PATH + "SequenceView.png";
+    public static final String PLAY_VIEW_ACTIVE_FILE = BUTTON_IMAGES_PATH + "PlayAnimationActive.png";
+    public static final String SEQUENCE_VIEW_ACTIVE_FILE = BUTTON_IMAGES_PATH + "SequenceViewActive.png";
+    
+    // BUTTON IMAGES FOR ANIMATION STATE CONTROLS
+    public static final String NEW_AS_FILE = BUTTON_IMAGES_PATH + "AddAnimationState.png";
+    public static final String COPY_AS_FILE = BUTTON_IMAGES_PATH + "CopyAnimationState.png";
+    public static final String REMOVE_AS_FILE = BUTTON_IMAGES_PATH + "RemoveAnimationState.png";
+    
     // BUTTON IMAGES FOR FILE TOOLBAR
     public static final String NEW_IMAGE_FILE = BUTTON_IMAGES_PATH + "New.png";
     public static final String OPEN_IMAGE_FILE = BUTTON_IMAGES_PATH + "Open.png";
@@ -93,6 +110,13 @@ public class PoseurSettings
     // THIS LISTS ALL THE TOOLTIPS FOR OUR CONTROLS. THEY
     // ARE GROUPED BY TOOLBAR
     
+    // TOOLTIPS FOR PLAYING ANIMATIONS
+    public static final String PLAY_ANIMATION_TOOLTIP = "Play Animation";
+    public static final String STOP_ANIMATION_TOOLTIP = "Stop Animation";
+    public static final String SPEEDUP_ANIMATION_TOOLTIP = "Speed up animation";
+    public static final String SLOWDOWN_ANIMATION_TOOLTIP = "Slow down animation";
+    
+    
     // TOOLTIPS FOR CONTROLS ON FILE TOOLBAR
     public static final String NEW_TOOLTIP = "New Pose";
     public static final String OPEN_TOOLTIP = "Open Pose";
@@ -126,6 +150,15 @@ public class PoseurSettings
     public static final String PALLET_TOOLTIP = "Select Pallet Color";
     public static final String CUSTOM_COLOR_TOOLTIP = "Make a Custom Color";
     public static final String ALPHA_TOOLTIP = "Select Shape Alpha Value";
+    
+    // TOOLTIPS FOR VIEW SELECT
+    public static final String PLAY_VIEW_TOOLTIP = "Switch to animation stage";
+    public static final String SEQUENCE_VIEW_TOOLTIP = "Switch to Sequener view";
+    
+    // TOOLTIPS FOR ANIMATION STATE CONTROLS
+    public static final String NEW_AS_TOOLTIP = "Add a new animation state";
+    public static final String COPY_AS_TOOLTIP = "Duplicate the selected animation state";
+    public static final String REMOVE_AS_TOOLTIP = "Remove the selected animation state";    
 
     /***** COLORS *****/
     // WE'LL USE THESE COLOR FOR OUR USER INTERFACE
@@ -229,6 +262,9 @@ public class PoseurSettings
     public static final float   INIT_ZOOM_LEVEL = 1.0f;
     public static final float   ZOOM_FACTOR = 0.1f;
     public static final float   MIN_ZOOM_LEVEL = 0.1f;
+    
+    /**** VIEW SELECT SETTINGS ***/
+    public static final String VIEW_SELECT_TEXT = "view select: ";
     
     /***** TRANSPARENCY SLIDER SETTINGS *****/
     public static final String  ALPHA_LABEL_TEXT = "  " + (char)(0x03B1) + ": ";

@@ -510,6 +510,7 @@ public class PoseurGUI extends JFrame
 
         // LET'S MAKE THE CANVAS ON THE LEFT SIDE, WHICH
         // WILL NEVER ZOOM
+        
         PoseCanvasState trueCanvasState = poseurStateManager.getTrueCanvasState();
         trueCanvas = new PoseCanvas(trueCanvasState);
         trueCanvasState.setPoseCanvas(trueCanvas);
@@ -535,11 +536,7 @@ public class PoseurGUI extends JFrame
         northLeftBottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         northLeftBottomRightPanel = new JPanel();
         
-        
-        northOfNorthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        southOfNorthPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        
-        // WE'LL BATCH LOAD THE IMAGES
+       // WE'LL BATCH LOAD THE IMAGES
         MediaTracker tracker = new MediaTracker(this);
         int idCounter = 0;
 
@@ -555,15 +552,15 @@ public class PoseurGUI extends JFrame
         slowDownButton = initAnimationButton(SLOWDOWN_ANIMATION_FILE, SLOWDOWN_ANIMATION_TOOLTIP, tracker, idCounter++);
         
         // VIEW SELECTION
-        viewSelectLabel = JLabel("");
+        viewSelectLabel = new JLabel(VIEW_SELECT_TEXT);
         playAnimationViewButton =  initAnimationButton(PLAY_VIEW_FILE, PLAY_VIEW_TOOLTIP, tracker, idCounter++);
         sequenceViewButton =       initAnimationButton(SEQUENCE_VIEW_FILE, SEQUENCE_VIEW_TOOLTIP,  tracker, idCounter++);
         
         // Animation State Controls
-        JToolBar animationStateToolbar = new JToolBar();
-        JButton newAS    =(JButton)initButton(NEW_AS_FILE,         animationStateToolbar,  tracker, idCounter++, JButton.class, null, NEW_AS_TOOLTIP);
-        JButton copyAS   =(JButton)initButton(COPY_AS_FILE,        animationStateToolbar,  tracker, idCounter++, JButton.class, null, COPY_AS_TOOLTIP);
-        JButton removeAS =(JButton)initButton(REMOVE_AS_FILE,      animationStateToolbar,  tracker, idCounter++, JButton.class, null, REMOVE_AS_TOOLTIP);
+        animationStateToolbar = new JToolBar();
+        newAS    =(JButton)initButton(NEW_AS_FILE,         animationStateToolbar,  tracker, idCounter++, JButton.class, null, NEW_AS_TOOLTIP);
+        copyAS   =(JButton)initButton(COPY_AS_FILE,        animationStateToolbar,  tracker, idCounter++, JButton.class, null, COPY_AS_TOOLTIP);
+        removeAS =(JButton)initButton(REMOVE_AS_FILE,      animationStateToolbar,  tracker, idCounter++, JButton.class, null, REMOVE_AS_TOOLTIP);
         
         // FILE CONTROLS
         fileToolbar  = new JToolBar();
@@ -700,6 +697,17 @@ public class PoseurGUI extends JFrame
         northRightBottomPanel.add(zoomToolbar);
         northRightBottomPanel.add(colorSelectionToolbar);
         
+        northLeftTopRightPanel.add(animationStateSelect);
+        northLeftTopRightPanel.add(playAnimationButton);
+        northLeftTopRightPanel.add(stopAnimationButton);
+        northLeftTopRightPanel.add(speedUpButton);
+        northLeftTopRightPanel.add(slowDownButton);
+        northLeftBottomLeftPanel.add(animationStateToolbar);
+        northLeftBottomRightPanel.setLayout(new BorderLayout());
+        northLeftBottomRightPanel.add(viewSelectLabel, BorderLayout.NORTH);
+        northLeftBottomRightPanel.add(playAnimationViewButton, BorderLayout.SOUTH);
+        northLeftBottomRightPanel.add(sequenceViewButton, BorderLayout.SOUTH);
+        
         // NOW PUT ALL THE CONTROLS IN THE NORTH
         northPanel.setLayout(new BorderLayout());
         northRightPanel.setLayout(new BorderLayout());
@@ -708,7 +716,9 @@ public class PoseurGUI extends JFrame
         northPanel.add(northRightPanel);
         northRightPanel.add(northRightTopPanel, BorderLayout.NORTH);
         northRightPanel.add(northRightCenterPanel, BorderLayout.CENTER);
-        northRightPanel.add(northRightBottomPanel, BorderLayout.SOUTH);        
+        northRightPanel.add(northRightBottomPanel, BorderLayout.SOUTH);
+        
+        
 
         // AND NOW PUT EVERYTHING INSIDE THE FRAME
         add(northPanel, BorderLayout.NORTH);
@@ -806,7 +816,7 @@ public class PoseurGUI extends JFrame
     {
         // LOAD THE IMAGE
         Toolkit tk = Toolkit.getDefaultToolkit();
-        Image img = tk.getImage(GUI_IMAGES_PATH + iconFilename);
+        Image img = tk.getImage(iconFilename);
         mt.addImage(img, id);
         
         // AND USE IT TO BUILD THE BUTTON
