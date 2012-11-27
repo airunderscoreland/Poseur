@@ -711,15 +711,19 @@ public class PoseurGUI extends JFrame
         // NOW PUT ALL THE CONTROLS IN THE NORTH
         northPanel.setLayout(new BorderLayout());
         northRightPanel.setLayout(new BorderLayout());
-        northLeftPanel.setLayout(new GridLayout());
+        northLeftPanel.setLayout(new BorderLayout());
         
-        northPanel.add(northRightPanel);
+        
         northRightPanel.add(northRightTopPanel, BorderLayout.NORTH);
         northRightPanel.add(northRightCenterPanel, BorderLayout.CENTER);
         northRightPanel.add(northRightBottomPanel, BorderLayout.SOUTH);
+        northLeftPanel.add(northLeftTopRightPanel, BorderLayout.NORTH);
+        northLeftPanel.add(northLeftBottomLeftPanel, BorderLayout.SOUTH);
+        northLeftPanel.add(northLeftBottomRightPanel, BorderLayout.SOUTH);
         
-        
-
+        northPanel.add(northLeftPanel, BorderLayout.WEST);
+        northPanel.add(northRightPanel, BorderLayout.EAST);
+    
         // AND NOW PUT EVERYTHING INSIDE THE FRAME
         add(northPanel, BorderLayout.NORTH);
         add(canvasSplitPane, BorderLayout.CENTER);
