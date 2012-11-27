@@ -386,6 +386,11 @@ public class PoseurStateManager
      */    
     public void processMousePress(int x, int y)
     {
+        if (state == PoseurState.CREATE_SHAPE_STATE)
+        {
+            selectedShape = null;
+        }
+        
         // WE MAY HAVE TO USE VALUES IN POSE SPACE
         Rectangle2D poseArea = zoomableCanvasState.getPoseArea();
         float zoomLevel = zoomableCanvasState.getZoomLevel();

@@ -8,6 +8,8 @@ import poseur.state.PoseurStateManager;
 /**
  * This event handler responds to when the user wants to cut the
  * item on the clipboard and remove it from the rendering surface.
+ * 
+ * @author Andrew Ireland
  */
 public class CutHandler implements ActionListener
 {

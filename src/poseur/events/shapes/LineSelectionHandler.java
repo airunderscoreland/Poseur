@@ -8,7 +8,7 @@ import poseur.state.PoseurStateManager;
 
 /**
  * This handler responds to when the user requests to
- * start drawing a rectangle.
+ * start drawing a line.
  * 
  * @author  Richard McKenna
  *          Debugging Enterprises

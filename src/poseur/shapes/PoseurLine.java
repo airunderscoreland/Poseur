@@ -251,7 +251,7 @@ public class PoseurLine extends PoseurShape {
     public boolean completesValidShape(int x, int y)
     {
         // WE ONLY LET SHAPES BE BUILT TOP LEFT TO BOTTOM RIGHT
-        if ( (x < geometry.x2) ||
+        /*if ( (x < geometry.x2) ||
              (y < geometry.y2))
         {
             return false;
@@ -259,7 +259,8 @@ public class PoseurLine extends PoseurShape {
         else
         {
             return true;
-        }
+        }*/
+        return true;
     }
     
     /**
