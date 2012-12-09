@@ -98,10 +98,13 @@ public class PoseurGUI extends JFrame
     private JPanel northRightCenterPanel;
     private JPanel northRightBottomPanel;
     private JPanel northLeftPanel;
-    //private JPanel northLeftTopLeftPanel;
-    private JPanel northLeftTopRightPanel;
-    private JPanel northLeftBottomLeftPanel;
-    private JPanel northLeftBottomRightPanel;
+    private JPanel northLeftLeftPanel;
+    private JPanel northLeftLeftTopPanel;
+    private JPanel northLeftLeftBottomPanel;
+    private JPanel northLeftRightPanel;
+    private JPanel northLeftRightTopPanel;
+    private JPanel northLeftRightCenterPanel;
+    private JPanel northLeftRightBottomPanel;
     
     // ANIMATION STATE CONTROLS
     private JToolBar animationStateToolbar;
@@ -113,6 +116,7 @@ public class PoseurGUI extends JFrame
     private JList animationStateSelect;
     private DefaultListModel aStateSelectModel;
     private JScrollPane animationStateSelectJSP;
+    private JToolBar animationToolbar;
     private JButton playAnimationButton;
     private JButton stopAnimationButton;
     private JButton speedUpButton;
@@ -142,7 +146,6 @@ public class PoseurGUI extends JFrame
     private JButton bringToBackButton;
     
     // SHAPE SELECTION CONTROLS
-    private JToolBar shapeToolbar;
     private JToggleButton rectToggleButton;
     private JToggleButton ellipseToggleButton;
     private JToggleButton lineToggleButton;
@@ -531,10 +534,13 @@ public class PoseurGUI extends JFrame
         northRightCenterPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         northRightBottomPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
         northLeftPanel = new JPanel();
-        //northLeftTopLeftPanel = new JPanel(); //no need for this
-        northLeftTopRightPanel = new JPanel(new FlowLayout(FlowLayout.RIGHT));
-        northLeftBottomLeftPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        northLeftBottomRightPanel = new JPanel();
+        northLeftLeftPanel = new JPanel();
+        northLeftLeftTopPanel = new JPanel();
+        northLeftLeftBottomPanel = new JPanel();
+        northLeftRightPanel = new JPanel(new BorderLayout());
+        northLeftRightTopPanel = new JPanel();
+        northLeftRightCenterPanel = new JPanel();
+        northLeftRightBottomPanel = new JPanel();
         
        // WE'LL BATCH LOAD THE IMAGES
         MediaTracker tracker = new MediaTracker(this);
@@ -543,18 +549,20 @@ public class PoseurGUI extends JFrame
         // AS Selection and Buttons
         animationStateSelect = new JList();
         aStateSelectModel = new DefaultListModel();
+        addElementsToList(aStateSelectModel);
         animationStateSelect.setModel(aStateSelectModel);
         animationStateSelectJSP = new JScrollPane(animationStateSelect);
         
-        playAnimationButton = initAnimationButton(PLAY_ANIMATION_FILE, PLAY_ANIMATION_TOOLTIP, tracker, idCounter++);
-        stopAnimationButton = initAnimationButton(STOP_ANIMATION_FILE, STOP_ANIMATION_TOOLTIP, tracker, idCounter++);
-        speedUpButton = initAnimationButton(SPEEDUP_ANIMATION_FILE, SPEEDUP_ANIMATION_TOOLTIP, tracker, idCounter++);
-        slowDownButton = initAnimationButton(SLOWDOWN_ANIMATION_FILE, SLOWDOWN_ANIMATION_TOOLTIP, tracker, idCounter++);
+        animationToolbar = new JToolBar();
+        playAnimationButton = (JButton)initButton(PLAY_ANIMATION_FILE, animationToolbar,  tracker, idCounter++, JButton.class, null, PLAY_ANIMATION_TOOLTIP);
+        stopAnimationButton = (JButton)initButton(STOP_ANIMATION_FILE, animationToolbar,  tracker, idCounter++, JButton.class, null, STOP_ANIMATION_TOOLTIP);
+        speedUpButton =       (JButton)initButton(SPEEDUP_ANIMATION_FILE,    animationToolbar,  tracker, idCounter++, JButton.class, null, SPEEDUP_ANIMATION_TOOLTIP);
+        slowDownButton =      (JButton)initButton(SLOWDOWN_ANIMATION_FILE,    animationToolbar,  tracker, idCounter++, JButton.class, null, SLOWDOWN_ANIMATION_TOOLTIP);
         
         // VIEW SELECTION
         viewSelectLabel = new JLabel(VIEW_SELECT_TEXT);
-        playAnimationViewButton =  initAnimationButton(PLAY_VIEW_FILE, PLAY_VIEW_TOOLTIP, tracker, idCounter++);
-        sequenceViewButton =       initAnimationButton(SEQUENCE_VIEW_FILE, SEQUENCE_VIEW_TOOLTIP,  tracker, idCounter++);
+        playAnimationViewButton =  initNoToolBarButton(PLAY_VIEW_FILE, PLAY_VIEW_TOOLTIP, tracker, idCounter++);
+        sequenceViewButton =       initNoToolBarButton(SEQUENCE_VIEW_FILE, SEQUENCE_VIEW_TOOLTIP,  tracker, idCounter++);
         
         // Animation State Controls
         animationStateToolbar = new JToolBar();
@@ -581,11 +589,10 @@ public class PoseurGUI extends JFrame
         bringToFrontButton = (JButton)initButton(BRING_TO_FRONT_IMAGE_FILE,  editToolbar, tracker, idCounter++, JButton.class, null, BRING_TO_FRONT_TOOLTIP);
         
         // HERE ARE OUR SHAPE SELECTION CONTROLS
-        shapeToolbar = new JToolBar();
         shapeButtonGroup = new ButtonGroup();
-        rectToggleButton   = (JToggleButton)initButton( RECT_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, RECT_TOOLTIP);
-        ellipseToggleButton   = (JToggleButton)initButton( ELLIPSE_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, ELLIPSE_TOOLTIP);
-        lineToggleButton   = (JToggleButton)initButton( LINE_SELECTION_IMAGE_FILE,      shapeToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, LINE_TOOLTIP);
+        rectToggleButton   = (JToggleButton)initButton( RECT_SELECTION_IMAGE_FILE,      editToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, RECT_TOOLTIP);
+        ellipseToggleButton   = (JToggleButton)initButton( ELLIPSE_SELECTION_IMAGE_FILE,      editToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, ELLIPSE_TOOLTIP);
+        lineToggleButton   = (JToggleButton)initButton( LINE_SELECTION_IMAGE_FILE,      editToolbar, tracker, idCounter++, JToggleButton.class, shapeButtonGroup, LINE_TOOLTIP);
         
         // THE LINE THICKNESS SELECTION COMBO BOX WILL GO WITH THE SHAPE CONTROLS
         DefaultComboBoxModel lineThicknessModel = new DefaultComboBoxModel();
@@ -682,7 +689,7 @@ public class PoseurGUI extends JFrame
         canvasSplitPane.setEnabled(false);
         
         // PUT THE COMBO BOX IN THE SHAPE TOOLBAR
-        shapeToolbar.add(lineStrokeSelectionComboBox);
+        editToolbar.add(lineStrokeSelectionComboBox);
         
         // ARRANGE THE COLOR SELECTION TOOLBAR
         colorSelectionToolbar.add(colorPallet);        
@@ -691,38 +698,43 @@ public class PoseurGUI extends JFrame
         colorSelectionToolbar.add(transparencySlider);
   
         // NOW ARRANGE THE TOOLBARS
-        northRightTopPanel.add(fileToolbar);
         northRightTopPanel.add(editToolbar);
-        northRightCenterPanel.add(shapeToolbar);
         northRightBottomPanel.add(zoomToolbar);
-        northRightBottomPanel.add(colorSelectionToolbar);
+        northRightCenterPanel.add(colorSelectionToolbar);
         
-        northLeftTopRightPanel.add(animationStateSelect);
-        northLeftTopRightPanel.add(playAnimationButton);
-        northLeftTopRightPanel.add(stopAnimationButton);
-        northLeftTopRightPanel.add(speedUpButton);
-        northLeftTopRightPanel.add(slowDownButton);
-        northLeftBottomLeftPanel.add(animationStateToolbar);
-        northLeftBottomRightPanel.setLayout(new BorderLayout());
-        northLeftBottomRightPanel.add(viewSelectLabel, BorderLayout.NORTH);
-        northLeftBottomRightPanel.add(playAnimationViewButton, BorderLayout.SOUTH);
-        northLeftBottomRightPanel.add(sequenceViewButton, BorderLayout.SOUTH);
+        northLeftLeftTopPanel.add(animationStateSelect);
+        northLeftRightTopPanel.add(fileToolbar);
+        northLeftRightCenterPanel.add(animationToolbar);
+        northLeftLeftBottomPanel.add(animationStateToolbar);
+        northLeftRightBottomPanel.setLayout(new BorderLayout());
+        northLeftRightBottomPanel.add(viewSelectLabel, BorderLayout.NORTH);
+        northLeftRightBottomPanel.add(playAnimationViewButton, BorderLayout.CENTER);
+        northLeftRightBottomPanel.add(sequenceViewButton, BorderLayout.EAST);
+        
+        GridLayout northLayout = new GridLayout(0,2);
         
         // NOW PUT ALL THE CONTROLS IN THE NORTH
-        northPanel.setLayout(new BorderLayout());
+        northPanel.setLayout(northLayout);
         northRightPanel.setLayout(new BorderLayout());
         northLeftPanel.setLayout(new BorderLayout());
+        northLeftLeftPanel.setLayout(new BorderLayout());
         
+        northLeftLeftPanel.setBackground(Color.GREEN);
         
         northRightPanel.add(northRightTopPanel, BorderLayout.NORTH);
         northRightPanel.add(northRightCenterPanel, BorderLayout.CENTER);
         northRightPanel.add(northRightBottomPanel, BorderLayout.SOUTH);
-        northLeftPanel.add(northLeftTopRightPanel, BorderLayout.NORTH);
-        northLeftPanel.add(northLeftBottomLeftPanel, BorderLayout.SOUTH);
-        northLeftPanel.add(northLeftBottomRightPanel, BorderLayout.SOUTH);
+        northLeftLeftPanel.add(northLeftLeftTopPanel, BorderLayout.NORTH);
+        northLeftLeftPanel.add(northLeftLeftBottomPanel, BorderLayout.CENTER);
+        northLeftRightPanel.add(northLeftRightTopPanel, BorderLayout.NORTH);
+        northLeftRightPanel.add(northLeftRightCenterPanel, BorderLayout.CENTER);
+        northLeftRightPanel.add(northLeftRightBottomPanel, BorderLayout.SOUTH);
         
-        northPanel.add(northLeftPanel, BorderLayout.WEST);
-        northPanel.add(northRightPanel, BorderLayout.EAST);
+        northLeftPanel.add(northLeftLeftPanel, BorderLayout.WEST);
+        northLeftPanel.add(northLeftRightPanel, BorderLayout.EAST);
+        
+        northPanel.add(northLeftPanel);
+        northPanel.add(northRightPanel);
     
         // AND NOW PUT EVERYTHING INSIDE THE FRAME
         add(northPanel, BorderLayout.NORTH);
@@ -807,8 +819,8 @@ public class PoseurGUI extends JFrame
     }
 
     /**
-     * Button construction helper method for making animation buttons. (play, 
-     * pause etc.)
+     * Button construction helper method for making buttons that do not
+     * go into a toolbar.
      * 
      * @param iconFilename File name for the image
      * @param tooltip The tooltip for the button
@@ -816,7 +828,7 @@ public class PoseurGUI extends JFrame
      * @param id ID for media tracker
      * @return the JButton we want
      */
-    private JButton initAnimationButton(String iconFilename, String tooltip, MediaTracker mt, int id)
+    private JButton initNoToolBarButton(String iconFilename, String tooltip, MediaTracker mt, int id)
     {
         // LOAD THE IMAGE
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -829,8 +841,8 @@ public class PoseurGUI extends JFrame
         button.setToolTipText(tooltip);
         
         // LET'S PUT A LITTLE BUFFER AROUND THE IMAGE AND THE EDGE OF THE BUTTON
-        Insets insets = new Insets(2,2,2,2);
-        button.setMargin(insets);
+        //Insets insets = new Insets(2,2,2,2);
+        //button.setMargin(insets);
         
         // AND SEND THE CONSTRUCTED BUTTON BACK
         return button;
@@ -1021,5 +1033,12 @@ public class PoseurGUI extends JFrame
         // AND NOW SWITCH TO A CROSSHAIRS CURSOR
         Cursor arrowCursor = Cursor.getPredefinedCursor(cursorToUse);
         setCursor(arrowCursor);    
+    }
+    
+    private void addElementsToList(DefaultListModel list)
+    {
+        list.addElement("WALKING_UP");
+        list.addElement("WALKING_DOWN");
+        list.addElement("State2");
     }
 }
